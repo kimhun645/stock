@@ -16,14 +16,14 @@ function App() {
 
   const getViewTitle = () => {
     switch (currentView) {
-      case 'dashboard': return 'Dashboard';
-      case 'materials': return 'Materials';
-      case 'requests': return 'Material Requests';
-      case 'users': return 'User Management';
-      case 'reports': return 'Reports';
-      case 'notifications': return 'Notifications';
-      case 'settings': return 'Settings';
-      default: return 'Dashboard';
+      case 'dashboard': return 'แดชบอร์ด';
+      case 'materials': return 'จัดการวัสดุ';
+      case 'requests': return 'คำขอเบิกวัสดุ';
+      case 'users': return 'จัดการผู้ใช้';
+      case 'reports': return 'รายงาน';
+      case 'notifications': return 'การแจ้งเตือน';
+      case 'settings': return 'ตั้งค่า';
+      default: return 'แดชบอร์ด';
     }
   };
 

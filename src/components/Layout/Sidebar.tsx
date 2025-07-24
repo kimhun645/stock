@@ -17,13 +17,13 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: Home },
-  { id: 'materials', label: 'Materials', icon: Package },
-  { id: 'requests', label: 'Requests', icon: ShoppingCart },
-  { id: 'users', label: 'Users', icon: Users },
-  { id: 'reports', label: 'Reports', icon: BarChart3 },
-  { id: 'notifications', label: 'Notifications', icon: Bell },
-  { id: 'settings', label: 'Settings', icon: Settings }
+  { id: 'dashboard', label: 'แดชบอร์ด', icon: Home },
+  { id: 'materials', label: 'จัดการวัสดุ', icon: Package },
+  { id: 'requests', label: 'คำขอเบิกวัสดุ', icon: ShoppingCart },
+  { id: 'users', label: 'จัดการผู้ใช้', icon: Users },
+  { id: 'reports', label: 'รายงาน', icon: BarChart3 },
+  { id: 'notifications', label: 'การแจ้งเตือน', icon: Bell },
+  { id: 'settings', label: 'ตั้งค่า', icon: Settings }
 ];
 
 export function Sidebar({ activeView, onViewChange, isCollapsed }: SidebarProps) {
@@ -38,7 +38,7 @@ export function Sidebar({ activeView, onViewChange, isCollapsed }: SidebarProps)
             <Package className="w-5 h-5 text-white" />
           </div>
           {!isCollapsed && (
-            <h1 className="text-xl font-bold text-white">MaterialFlow</h1>
+            <h1 className="text-xl font-bold text-white">ระบบเบิกวัสดุ</h1>
           )}
         </div>
       </div>
@@ -81,8 +81,8 @@ export function Sidebar({ activeView, onViewChange, isCollapsed }: SidebarProps)
           />
           {!isCollapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">John Doe</p>
-              <p className="text-xs text-white/70 truncate">Manager</p>
+              <p className="text-sm font-medium text-white truncate">จอห์น โด</p>
+              <p className="text-xs text-white/70 truncate">ผู้จัดการ</p>
             </div>
           )}
         </div>
