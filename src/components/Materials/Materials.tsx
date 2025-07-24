@@ -187,7 +187,7 @@ export function Notifications() {
               className="rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
             />
           </div>
-        title="สแกนบาร์โค้ดวัสดุ"
+        </div>
       </Card>
     </div>
   );
