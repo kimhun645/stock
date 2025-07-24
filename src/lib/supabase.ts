@@ -66,6 +66,7 @@ export interface Approval {
   id: string;
   request_id: string;
   decision: 'APPROVE' | 'REJECT';
+  approver_name?: string;
   remark?: string;
   created_at: string;
 }

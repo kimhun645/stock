@@ -175,8 +175,7 @@ export function BudgetRequestDetails({ isOpen, onClose, request }: BudgetRequest
                       <span className="font-medium">ผู้อนุมัติ:</span>
                     </div>
                     <p className="text-white print:text-black font-medium">
-                      {/* ใช้ข้อมูลจาก email หรือข้อมูลที่มี */}
-                      ผู้อนุมัติ (อนุมัติเมื่อ {new Date(latestApproval.created_at).toLocaleDateString('th-TH')})
+                      {latestApproval.approver_name || 'ไม่ระบุชื่อ'} (อนุมัติเมื่อ {new Date(latestApproval.created_at).toLocaleDateString('th-TH')})
                     </p>
                   </div>
                 )}

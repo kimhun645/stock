@@ -56,7 +56,7 @@ export class BudgetService {
   }
 
   // เพิ่มการอนุมัติ
-  static async addApproval(approval: Omit<Approval, 'id' | 'created_at'>): Promise<Approval> {
+  static async addApproval(approval: Omit<Approval, 'id' | 'created_at'> & { approver_name?: string }): Promise<Approval> {
     const { data, error } = await supabase
       .from('approvals')
       .insert([approval])

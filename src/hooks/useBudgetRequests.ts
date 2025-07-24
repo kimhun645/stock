@@ -31,12 +31,13 @@ export function useBudgetRequests() {
     }
   };
 
-  const approveRequest = async (requestId: string, remark?: string) => {
+  const approveRequest = async (requestId: string, remark?: string, approverName?: string) => {
     try {
       await BudgetService.addApproval({
         request_id: requestId,
         decision: 'APPROVE',
-        remark
+        remark,
+        approver_name: approverName
       });
       await fetchRequests(); // รีเฟรชข้อมูล
     } catch (err) {
@@ -45,12 +46,13 @@ export function useBudgetRequests() {
     }
   };
 
-  const rejectRequest = async (requestId: string, remark?: string) => {
+  const rejectRequest = async (requestId: string, remark?: string, approverName?: string) => {
     try {
       await BudgetService.addApproval({
         request_id: requestId,
         decision: 'REJECT',
-        remark
+        remark,
+        approver_name: approverName
       });
       await fetchRequests(); // รีเฟรชข้อมูล
     } catch (err) {
