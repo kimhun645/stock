@@ -69,6 +69,11 @@ export function Materials() {
     setEditingMaterial(null);
   };
 
+  const openAddForm = () => {
+    setEditingMaterial(null);
+    setIsFormOpen(true);
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -150,7 +155,7 @@ export function Materials() {
           <p className="text-white/60 mb-4">
             {searchTerm || categoryFilter ? 'ไม่พบวัสดุที่ตรงกับเงื่อนไขการค้นหา' : 'ยังไม่มีวัสดุในระบบ'}
           </p>
-          <Button onClick={() => setIsFormOpen(true)} className="flex items-center space-x-2">
+          <Button onClick={openAddForm} className="flex items-center space-x-2">
             <Plus className="w-4 h-4" />
             <span>เพิ่มวัสดุแรก</span>
           </Button>
@@ -158,13 +163,13 @@ export function Materials() {
       )}
 
       {/* Material Form Modal */}
-      {isFormOpen && (
-        <MaterialForm
-          material={editingMaterial}
-          onSubmit={editingMaterial ? handleEditMaterial : handleAddMaterial}
-          onClose={closeForm}
-        />
-      )}
+      <MaterialForm
+        isOpen={isFormOpen}
+        onClose={closeForm}
+        onSubmit={editingMaterial ? handleEditMaterial : handleAddMaterial}
+        initialData={editingMaterial || undefined}
+        mode={editingMaterial ? 'edit' : 'create'}
+      />
     </div>
   );
 }

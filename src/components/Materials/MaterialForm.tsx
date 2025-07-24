@@ -30,10 +30,29 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
     expiry_date: initialData?.expiry_date || ''
   });
 
+  // Reset form when modal opens/closes or initialData changes
+  React.useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: initialData?.name || '',
+        barcode: initialData?.barcode || '',
+        material_code: initialData?.material_code || '',
+        category: initialData?.category || '',
+        note: initialData?.note || '',
+        unit: initialData?.unit || '',
+        initial_stock: initialData?.initial_stock || 0,
+        current_stock: initialData?.current_stock || 0,
+        min_stock: initialData?.min_stock || 0,
+        price: initialData?.price || 0,
+        location: initialData?.location || '',
+        expiry_date: initialData?.expiry_date || ''
+      });
+    }
+  }, [isOpen, initialData]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
-    onClose();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
