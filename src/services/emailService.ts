@@ -59,10 +59,10 @@ export class EmailService {
 
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
       console.log('Email sent successfully');
-    catch (error) {
+    } catch (error) {
   console.error('Error sending email (detail):', error);
   // เพิ่มรายละเอียด error กลับไปด้วย
   throw new Error('ไม่สามารถส่งอีเมลได้: ' + (error?.text || error?.message || error));
-}
+    }
   }
 }
