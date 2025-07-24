@@ -70,6 +70,16 @@ export function useBudgetRequests() {
     }
   };
 
+  const deleteRequest = async (requestId: string) => {
+    try {
+      await BudgetService.deleteRequest(requestId);
+      setRequests(prev => prev.filter(req => req.id !== requestId));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดในการลบคำขอ');
+      throw err;
+    }
+  };
+
   useEffect(() => {
     fetchRequests();
   }, []);
@@ -82,6 +92,7 @@ export function useBudgetRequests() {
     createRequest,
     approveRequest,
     rejectRequest,
-    getApprovals
+    getApprovals,
+    deleteRequest
   };
 }

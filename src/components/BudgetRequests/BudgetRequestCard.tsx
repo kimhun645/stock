@@ -9,15 +9,17 @@ import {
   Eye,
   Clock,
   CheckCircle,
-  XCircle
+  XCircle,
+  Trash2
 } from 'lucide-react';
 
 interface BudgetRequestCardProps {
   request: BudgetRequest;
   onView: (request: BudgetRequest) => void;
+  onDelete?: (requestId: string) => void;
 }
 
-export function BudgetRequestCard({ request, onView }: BudgetRequestCardProps) {
+export function BudgetRequestCard({ request, onView, onDelete }: BudgetRequestCardProps) {
   const getStatusIcon = () => {
     switch (request.status) {
       case 'PENDING':
@@ -112,7 +114,7 @@ export function BudgetRequestCard({ request, onView }: BudgetRequestCardProps) {
         </div>
 
         {/* Actions */}
-        <div className="pt-2">
+        <div className="pt-2 space-y-2">
           <Button
             size="sm"
             variant="secondary"
@@ -122,6 +124,19 @@ export function BudgetRequestCard({ request, onView }: BudgetRequestCardProps) {
             <Eye className="w-4 h-4" />
             <span>ดูรายละเอียด</span>
           </Button>
+          
+          {/* แสดงปุ่มลบเฉพาะคำขอที่ยังไม่อนุมัติ */}
+          {request.status === 'PENDING' && onDelete && (
+            <Button
+              size="sm"
+              variant="danger"
+              onClick={() => onDelete(request.id)}
+              className="flex items-center space-x-1 w-full justify-center"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>ลบคำขอ</span>
+            </Button>
+          )}
         </div>
       </div>
     </Card>

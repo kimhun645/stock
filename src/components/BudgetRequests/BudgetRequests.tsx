@@ -9,7 +9,7 @@ import { Plus, Search, Filter } from 'lucide-react';
 import { BudgetRequest } from '../../lib/supabase';
 
 export function BudgetRequests() {
-  const { requests, loading, error, fetchRequests } = useBudgetRequests();
+  const { requests, loading, error, fetchRequests, deleteRequest } = useBudgetRequests();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<BudgetRequest | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +22,20 @@ export function BudgetRequests() {
     const matchesStatus = !statusFilter || request.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const handleDeleteRequest = async (requestId: string) => {
+    const request = requests.find(r => r.id === requestId);
+    if (!request) return;
+
+    if (confirm(`คุณแน่ใจหรือไม่ที่จะลบคำขอ ${request.request_no}?`)) {
+      try {
+        await deleteRequest(requestId);
+        alert('ลบคำขอสำเร็จ');
+      } catch (error) {
+        alert('เกิดข้อผิดพลาดในการลบคำขอ');
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -98,6 +112,7 @@ export function BudgetRequests() {
             key={request.id}
             request={request}
             onView={setSelectedRequest}
+            onDelete={handleDeleteRequest}
           />
         ))}
       </div>

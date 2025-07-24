@@ -90,4 +90,17 @@ export class BudgetService {
 
     return data || [];
   }
+
+  // ลบคำขอใช้งบประมาณ
+  static async deleteRequest(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('budget_requests')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting budget request:', error);
+      throw error;
+    }
+  }
 }
