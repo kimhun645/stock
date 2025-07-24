@@ -39,10 +39,25 @@ export function BudgetRequestForm({ isOpen, onClose, onSuccess }: BudgetRequestF
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // ตรวจสอบว่าอีเมลผู้อนุมัติไม่เป็นค่าว่าง
+    if (!formData.approverEmail || !formData.approverEmail.trim()) {
+      alert('กรุณากรอกอีเมลผู้อนุมัติ');
+      return;
+    }
+    
+    // ตรวจสอบรูปแบบอีเมล
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.approverEmail.trim())) {
+      alert('กรุณากรอกอีเมลผู้อนุมัติให้ถูกต้อง');
+      return;
+    }
+    
     if (items.some(item => !item.item.trim())) {
       alert('กรุณากรอกรายการให้ครบถ้วน');
       return;
     }
+    
     setShowConfirmation(true);
   };
 
