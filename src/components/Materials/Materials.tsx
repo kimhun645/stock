@@ -5,7 +5,7 @@ import { Card } from '../UI/Card';
 import { Button } from '../UI/Button';
 import { Bell, CheckCircle, AlertTriangle, Info, XCircle, Trash2, BookMarked as MarkAsRead } from 'lucide-react';
 
-export function Notifications() {
+export function Materials() {
   const { state } = useApp();
   const { markAsRead } = useNotification();
 
