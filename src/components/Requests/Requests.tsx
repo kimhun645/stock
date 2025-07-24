@@ -93,15 +93,15 @@ export function Requests() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Material Requests</h2>
-          <p className="text-white/60">Submit and manage material requests</p>
+          <h2 className="text-2xl font-bold text-white">คำขอเบิกวัสดุ</h2>
+          <p className="text-white/60">ส่งคำขอและจัดการคำขอเบิกวัสดุ</p>
         </div>
         <Button
           onClick={() => setIsFormOpen(true)}
           className="flex items-center space-x-2"
         >
           <Plus className="w-5 h-5" />
-          <span>New Request</span>
+          <span>คำขอใหม่</span>
         </Button>
       </div>
 
@@ -113,7 +113,7 @@ export function Requests() {
             <Search className="w-5 h-5 text-white/60 absolute left-3 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search requests..."
+              placeholder="ค้นหาคำขอ..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -128,11 +128,11 @@ export function Requests() {
               onChange={(e) => setStatusFilter(e.target.value)}
               className="pl-10 pr-8 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
-              <option value="completed">Completed</option>
+              <option value="">สถานะทั้งหมด</option>
+              <option value="pending">รอดำเนินการ</option>
+              <option value="approved">อนุมัติแล้ว</option>
+              <option value="rejected">ปฏิเสธ</option>
+              <option value="completed">เสร็จสิ้น</option>
             </select>
           </div>
 
@@ -143,11 +143,11 @@ export function Requests() {
               onChange={(e) => setUrgencyFilter(e.target.value)}
               className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">All Urgency</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-              <option value="urgent">Urgent</option>
+              <option value="">ความเร่งด่วนทั้งหมด</option>
+              <option value="low">ต่ำ</option>
+              <option value="medium">ปานกลาง</option>
+              <option value="high">สูง</option>
+              <option value="urgent">เร่งด่วน</option>
             </select>
           </div>
         </div>
@@ -170,14 +170,14 @@ export function Requests() {
       {filteredRequests.length === 0 && (
         <Card className="p-12 text-center">
           <p className="text-white/60 text-lg">
-            {searchTerm || statusFilter || urgencyFilter ? 'No requests found matching your criteria' : 'No requests submitted yet'}
+            {searchTerm || statusFilter || urgencyFilter ? 'ไม่พบคำขอที่ตรงกับเงื่อนไขการค้นหา' : 'ยังไม่มีคำขอในระบบ'}
           </p>
           {!searchTerm && !statusFilter && !urgencyFilter && (
             <Button
               onClick={() => setIsFormOpen(true)}
               className="mt-4"
             >
-              Submit Your First Request
+              ส่งคำขอรายการแรก
             </Button>
           )}
         </Card>

@@ -82,12 +82,17 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
               <User className="w-4 h-4 text-white/60" />
               <span className="text-white/80 text-sm">{request.requester.name}</span>
               <span className="text-white/60">•</span>
-              <span className="text-white/60 text-sm">{request.department}</span>
+            {request.urgencyLevel === 'low' ? 'ต่ำ' : 
+             request.urgencyLevel === 'medium' ? 'ปานกลาง' :
+             request.urgencyLevel === 'high' ? 'สูง' : 'เร่งด่วน'}
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <span className={`px-2 py-1 rounded-full text-xs border ${getUrgencyColor()}`}>
-              {request.urgencyLevel.toUpperCase()}
+              {request.status === 'pending' ? 'รอดำเนินการ' :
+               request.status === 'approved' ? 'อนุมัติแล้ว' :
+               request.status === 'rejected' ? 'ปฏิเสธ' :
+               request.status === 'completed' ? 'เสร็จสิ้น' : 'อนุมัติบางส่วน'}
             </span>
             <div className="flex items-center space-x-1">
               {getStatusIcon()}
@@ -101,7 +106,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
         {/* Request Info */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-white/60 text-xs">Request Date</p>
+            <p className="text-white/60 text-xs">วันที่ขอ</p>
             <div className="flex items-center space-x-1">
               <Calendar className="w-4 h-4 text-white/60" />
               <span className="text-white text-sm">
@@ -110,7 +115,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
             </div>
           </div>
           <div>
-            <p className="text-white/60 text-xs">Total Items</p>
+            <p className="text-white/60 text-xs">รายการทั้งหมด</p>
             <div className="flex items-center space-x-1">
               <Package className="w-4 h-4 text-white/60" />
               <span className="text-white text-sm">{request.items.length}</span>
@@ -120,13 +125,13 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
 
         {/* Reason */}
         <div>
-          <p className="text-white/60 text-xs">Reason</p>
+          <p className="text-white/60 text-xs">เหตุผล</p>
           <p className="text-white/80 text-sm">{request.reason}</p>
         </div>
 
         {/* Items Preview */}
         <div>
-          <p className="text-white/60 text-xs mb-2">Items</p>
+          <p className="text-white/60 text-xs mb-2">รายการ</p>
           <div className="space-y-1">
             {request.items.slice(0, 3).map((item, index) => (
               <div key={index} className="flex justify-between text-sm">
@@ -138,7 +143,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
             ))}
             {request.items.length > 3 && (
               <p className="text-white/60 text-xs">
-                +{request.items.length - 3} more items
+                +{request.items.length - 3} รายการเพิ่มเติม
               </p>
             )}
           </div>
@@ -146,7 +151,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
 
         {/* Total Value */}
         <div className="flex justify-between items-center pt-2 border-t border-white/10">
-          <span className="text-white/60 text-sm">Total Value</span>
+          <span className="text-white/60 text-sm">มูลค่ารวม</span>
           <span className="text-white font-semibold">₿{request.totalValue.toLocaleString()}</span>
         </div>
 
@@ -159,7 +164,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
             className="flex items-center space-x-1 flex-1"
           >
             <Eye className="w-4 h-4" />
-            <span>View Details</span>
+            <span>ดูรายละเอียด</span>
           </Button>
           
           {showActions && request.status === 'pending' && (
@@ -171,7 +176,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
                   onClick={() => onApprove(request.id)}
                   className="flex-1"
                 >
-                  Approve
+                  อนุมัติ
                 </Button>
               )}
               {onReject && (
@@ -181,7 +186,7 @@ export function RequestCard({ request, onView, onApprove, onReject, showActions 
                   onClick={() => onReject(request.id)}
                   className="flex-1"
                 >
-                  Reject
+                  ปฏิเสธ
                 </Button>
               )}
             </>

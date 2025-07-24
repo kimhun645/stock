@@ -136,8 +136,8 @@ export function Materials() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Materials Management</h2>
-          <p className="text-white/60">Manage your inventory materials and stock levels</p>
+          <h2 className="text-2xl font-bold text-white">จัดการวัสดุ</h2>
+          <p className="text-white/60">จัดการวัสดุคลังสินค้าและระดับสต็อก</p>
         </div>
         <div className="flex space-x-3">
           <Button
@@ -146,14 +146,14 @@ export function Materials() {
             className="flex items-center space-x-2"
           >
             <Scan className="w-5 h-5" />
-            <span>Scan Barcode</span>
+            <span>สแกนบาร์โค้ด</span>
           </Button>
           <Button
             onClick={() => setIsFormOpen(true)}
             className="flex items-center space-x-2"
           >
             <Plus className="w-5 h-5" />
-            <span>Add Material</span>
+            <span>เพิ่มวัสดุ</span>
           </Button>
         </div>
       </div>
@@ -166,7 +166,7 @@ export function Materials() {
             <Search className="w-5 h-5 text-white/60 absolute left-3 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search materials..."
+              placeholder="ค้นหาวัสดุ..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -181,7 +181,7 @@ export function Materials() {
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="pl-10 pr-8 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">All Categories</option>
+              <option value="">หมวดหมู่ทั้งหมด</option>
               {categories.map(category => (
                 <option key={category} value={category}>{category}</option>
               ))}
@@ -205,14 +205,14 @@ export function Materials() {
       {finalFilteredMaterials.length === 0 && (
         <Card className="p-12 text-center">
           <p className="text-white/60 text-lg">
-            {searchTerm || selectedCategory ? 'No materials found matching your criteria' : 'No materials added yet'}
+            {searchTerm || selectedCategory ? 'ไม่พบวัสดุที่ตรงกับเงื่อนไขการค้นหา' : 'ยังไม่มีวัสดุในระบบ'}
           </p>
           {!searchTerm && !selectedCategory && (
             <Button
               onClick={() => setIsFormOpen(true)}
               className="mt-4"
             >
-              Add Your First Material
+              เพิ่มวัสดุรายการแรก
             </Button>
           )}
         </Card>

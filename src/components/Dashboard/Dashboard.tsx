@@ -22,28 +22,28 @@ export function Dashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard
-          title="Total Requests"
+          title="คำขอทั้งหมด"
           value={dashboardStats.totalRequests}
           icon={<ShoppingCart className="w-6 h-6 text-white" />}
           trend={{ value: 12, isPositive: true }}
           color="blue"
         />
         <StatsCard
-          title="Pending Approval"
+          title="รอการอนุมัติ"
           value={dashboardStats.pendingRequests}
           icon={<Clock className="w-6 h-6 text-white" />}
           trend={{ value: 5, isPositive: false }}
           color="yellow"
         />
         <StatsCard
-          title="Completed"
+          title="เสร็จสิ้นแล้ว"
           value={dashboardStats.completedRequests}
           icon={<CheckCircle className="w-6 h-6 text-white" />}
           trend={{ value: 8, isPositive: true }}
           color="green"
         />
         <StatsCard
-          title="Total Value"
+          title="มูลค่ารวม"
           value={`₿${dashboardStats.totalValue.toLocaleString()}`}
           icon={<TrendingUp className="w-6 h-6 text-white" />}
           trend={{ value: 15, isPositive: true }}
@@ -55,7 +55,7 @@ export function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Trend Chart */}
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Monthly Requests Trend</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">แนวโน้มคำขอรายเดือน</h3>
           <div className="space-y-3">
             {dashboardStats.monthlyTrend.map((month) => (
               <div key={month.month} className="flex items-center justify-between">
@@ -78,7 +78,7 @@ export function Dashboard() {
         <Card className="p-6">
           <div className="flex items-center space-x-2 mb-4">
             <AlertTriangle className="w-5 h-5 text-yellow-500" />
-            <h3 className="text-lg font-semibold text-white">Low Stock Alert</h3>
+            <h3 className="text-lg font-semibold text-white">แจ้งเตือนวัสดุใกล้หมด</h3>
           </div>
           <div className="space-y-3">
             {lowStockMaterials.length > 0 ? (
@@ -95,7 +95,7 @@ export function Dashboard() {
                 </div>
               ))
             ) : (
-              <p className="text-white/60 text-center py-4">All materials are well stocked!</p>
+              <p className="text-white/60 text-center py-4">วัสดุทั้งหมดมีสต็อกเพียงพอ!</p>
             )}
           </div>
         </Card>
@@ -103,28 +103,28 @@ export function Dashboard() {
 
       {/* Recent Requests */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Recent Material Requests</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">คำขอวัสดุล่าสุด</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="text-white/70 text-sm">
-                <th className="text-left py-2">Request ID</th>
-                <th className="text-left py-2">Requester</th>
-                <th className="text-left py-2">Department</th>
-                <th className="text-left py-2">Status</th>
-                <th className="text-left py-2">Date</th>
-                <th className="text-left py-2">Value</th>
+                <th className="text-left py-2">รหัสคำขอ</th>
+                <th className="text-left py-2">ผู้ขอ</th>
+                <th className="text-left py-2">แผนก</th>
+                <th className="text-left py-2">สถานะ</th>
+                <th className="text-left py-2">วันที่</th>
+                <th className="text-left py-2">มูลค่า</th>
               </tr>
             </thead>
             <tbody className="text-white">
               {/* Mock recent requests */}
               <tr className="border-t border-white/10">
                 <td className="py-3">REQ-001</td>
-                <td className="py-3">John Smith</td>
-                <td className="py-3">IT</td>
+                <td className="py-3">สมชาย ใจดี</td>
+                <td className="py-3">ไอที</td>
                 <td className="py-3">
                   <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">
-                    Pending
+                    รอดำเนินการ
                   </span>
                 </td>
                 <td className="py-3">2024-01-15</td>
@@ -132,11 +132,11 @@ export function Dashboard() {
               </tr>
               <tr className="border-t border-white/10">
                 <td className="py-3">REQ-002</td>
-                <td className="py-3">Sarah Wilson</td>
-                <td className="py-3">HR</td>
+                <td className="py-3">สุดา สวยงาม</td>
+                <td className="py-3">ทรัพยากรบุคคล</td>
                 <td className="py-3">
                   <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">
-                    Approved
+                    อนุมัติแล้ว
                   </span>
                 </td>
                 <td className="py-3">2024-01-14</td>
@@ -144,11 +144,11 @@ export function Dashboard() {
               </tr>
               <tr className="border-t border-white/10">
                 <td className="py-3">REQ-003</td>
-                <td className="py-3">Mike Johnson</td>
-                <td className="py-3">Finance</td>
+                <td className="py-3">วิชัย รวยเงิน</td>
+                <td className="py-3">การเงิน</td>
                 <td className="py-3">
                   <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs">
-                    Completed
+                    เสร็จสิ้น
                   </span>
                 </td>
                 <td className="py-3">2024-01-13</td>

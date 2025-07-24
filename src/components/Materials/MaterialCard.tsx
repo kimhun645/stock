@@ -39,7 +39,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
             {isLowStock && (
               <div className="flex items-center space-x-1 text-yellow-400">
                 <AlertTriangle className="w-4 h-4" />
-                <span className="text-xs">Low Stock</span>
+                <span className="text-xs">สต็อกต่ำ</span>
               </div>
             )}
           </div>
@@ -60,23 +60,23 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
           {/* Stock Info */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <p className="text-white/60 text-xs">Current Stock</p>
+              <p className="text-white/60 text-xs">สต็อกปัจจุบัน</p>
               <p className="text-white font-medium">
                 {material.stockQuantity} {material.unit}
               </p>
             </div>
             <div>
-              <p className="text-white/60 text-xs">Min Level</p>
+              <p className="text-white/60 text-xs">ระดับขั้นต่ำ</p>
               <p className="text-white font-medium">
                 {material.minStockLevel} {material.unit}
               </p>
             </div>
             <div>
-              <p className="text-white/60 text-xs">Price per Unit</p>
+              <p className="text-white/60 text-xs">ราคาต่อหน่วย</p>
               <p className="text-white font-medium">₿{material.pricePerUnit}</p>
             </div>
             <div>
-              <p className="text-white/60 text-xs">Supplier</p>
+              <p className="text-white/60 text-xs">ผู้จำหน่าย</p>
               <p className="text-white font-medium text-sm">{material.supplier}</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
           {/* Stock Level Bar */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-1">
-              <span className="text-white/60 text-xs">Stock Level</span>
+              <span className="text-white/60 text-xs">ระดับสต็อก</span>
               <span className="text-white/60 text-xs">
                 {Math.round((material.stockQuantity / (material.minStockLevel * 3)) * 100)}%
               </span>
@@ -115,7 +115,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
               className="flex items-center space-x-1"
             >
               <Edit className="w-4 h-4" />
-              <span>Edit</span>
+              <span>แก้ไข</span>
             </Button>
             <Button
               size="sm"
@@ -124,7 +124,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
               className="flex items-center space-x-1"
             >
               <Trash2 className="w-4 h-4" />
-              <span>Delete</span>
+              <span>ลบ</span>
             </Button>
           </div>
         </div>

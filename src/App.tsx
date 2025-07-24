@@ -16,14 +16,14 @@ function App() {
 
   const getViewTitle = () => {
     switch (currentView) {
-      case 'dashboard': return 'แดชบอร์ด';
+      case 'dashboard': return 'หน้าหลัก';
       case 'materials': return 'จัดการวัสดุ';
       case 'requests': return 'คำขอเบิกวัสดุ';
       case 'users': return 'จัดการผู้ใช้';
       case 'reports': return 'รายงาน';
       case 'notifications': return 'การแจ้งเตือน';
-      case 'settings': return 'ตั้งค่า';
-      default: return 'แดชบอร์ด';
+      case 'settings': return 'ตั้งค่าระบบ';
+      default: return 'หน้าหลัก';
     }
   };
 
