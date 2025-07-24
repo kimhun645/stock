@@ -1,5 +1,5 @@
 import React from 'react';
-import { Material } from '../../types';
+import { Material } from '../../lib/supabase';
 import { Card } from '../UI/Card';
 import { Button } from '../UI/Button';
 import { Package, AlertTriangle, Edit, Trash2, Scan } from 'lucide-react';
@@ -11,22 +11,14 @@ interface MaterialCardProps {
 }
 
 export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) {
-  const isLowStock = material.stockQuantity <= material.minStockLevel;
+  const isLowStock = material.current_stock <= material.min_stock;
 
   return (
     <Card className="p-6 hover:scale-105 transition-transform duration-300">
       <div className="flex items-start space-x-4">
         {/* Material Image */}
         <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-          {material.imageUrl ? (
-            <img
-              src={material.imageUrl}
-              alt={material.name}
-              className="w-full h-full object-cover rounded-lg"
-            />
-          ) : (
-            <Package className="w-8 h-8 text-white" />
-          )}
+          <Package className="w-8 h-8 text-white" />
         </div>
 
         <div className="flex-1">
@@ -34,7 +26,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
           <div className="flex items-start justify-between mb-2">
             <div>
               <h3 className="text-lg font-semibold text-white">{material.name}</h3>
-              <p className="text-white/60 text-sm">{material.category}</p>
+              <p className="text-white/60 text-sm">{material.category || 'ไม่ระบุหมวดหมู่'}</p>
             </div>
             {isLowStock && (
               <div className="flex items-center space-x-1 text-yellow-400">
@@ -45,7 +37,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
           </div>
 
           {/* Description */}
-          <p className="text-white/70 text-sm mb-3">{material.description}</p>
+          <p className="text-white/70 text-sm mb-3">{material.note || 'ไม่มีรายละเอียด'}</p>
 
           {/* Barcode */}
           {material.barcode && (
@@ -62,22 +54,22 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
             <div>
               <p className="text-white/60 text-xs">สต็อกปัจจุบัน</p>
               <p className="text-white font-medium">
-                {material.stockQuantity} {material.unit}
+                {material.current_stock} {material.unit || 'หน่วย'}
               </p>
             </div>
             <div>
               <p className="text-white/60 text-xs">ระดับขั้นต่ำ</p>
               <p className="text-white font-medium">
-                {material.minStockLevel} {material.unit}
+                {material.min_stock} {material.unit || 'หน่วย'}
               </p>
             </div>
             <div>
               <p className="text-white/60 text-xs">ราคา/หน่วย</p>
-              <p className="text-white font-medium">₿{material.pricePerUnit}</p>
+              <p className="text-white font-medium">₿{material.price}</p>
             </div>
             <div>
-              <p className="text-white/60 text-xs">ผู้จำหน่าย</p>
-              <p className="text-white font-medium text-sm">{material.supplier}</p>
+              <p className="text-white/60 text-xs">ตำแหน่ง</p>
+              <p className="text-white font-medium text-sm">{material.location || 'ไม่ระบุ'}</p>
             </div>
           </div>
 
@@ -98,7 +90,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
                 }`}
                 style={{
                   width: `${Math.min(
-                    (material.stockQuantity / Math.max(material.minStockLevel * 3, 1)) * 100,
+                    (material.current_stock / Math.max(material.min_stock * 3, 1)) * 100,
                     100
                   )}%`
                 }}

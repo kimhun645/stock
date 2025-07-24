@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Material } from '../../types';
+import { Material } from '../../lib/supabase';
 import { Button } from '../UI/Button';
 import { Modal } from '../UI/Modal';
 import { BarcodeScanner } from '../UI/BarcodeScanner';
@@ -8,7 +8,7 @@ import { Scan } from 'lucide-react';
 interface MaterialFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (material: Omit<Material, 'id' | 'lastUpdated'>) => void;
+  onSubmit: (material: Omit<Material, 'id' | 'created_at' | 'updated_at'>) => void;
   initialData?: Material;
   mode: 'create' | 'edit';
 }
@@ -18,15 +18,16 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
   const [formData, setFormData] = useState({
     name: initialData?.name || '',
     barcode: initialData?.barcode || '',
+    material_code: initialData?.material_code || '',
     category: initialData?.category || '',
-    description: initialData?.description || '',
+    note: initialData?.note || '',
     unit: initialData?.unit || '',
-    stockQuantity: initialData?.stockQuantity || 0,
-    minStockLevel: initialData?.minStockLevel || 0,
-    pricePerUnit: initialData?.pricePerUnit || 0,
-    supplier: initialData?.supplier || '',
-    imageUrl: initialData?.imageUrl || '',
-    isActive: initialData?.isActive ?? true
+    initial_stock: initialData?.initial_stock || 0,
+    current_stock: initialData?.current_stock || 0,
+    min_stock: initialData?.min_stock || 0,
+    price: initialData?.price || 0,
+    location: initialData?.location || '',
+    expiry_date: initialData?.expiry_date || ''
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,8 +40,7 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
     const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'number' ? parseFloat(value) || 0 : 
-               type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      [name]: type === 'number' ? parseFloat(value) || 0 : value
     }));
   };
 
@@ -71,6 +71,20 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
                 required
                 className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="กรอกชื่อวัสดุ"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                รหัสวัสดุ
+              </label>
+              <input
+                type="text"
+                name="material_code"
+                value={formData.material_code}
+                onChange={handleChange}
+                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="กรอกรหัสวัสดุ"
               />
             </div>
 
@@ -114,6 +128,7 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
               <option value="เฟอร์นิเจอร์">เฟอร์นิเจอร์</option>
               <option value="อุปกรณ์ซ่อมบำรุง">อุปกรณ์ซ่อมบำรุง</option>
               <option value="อุปกรณ์ความปลอดภัย">อุปกรณ์ความปลอดภัย</option>
+              <option value="วัสดุงานบ้านงานครัว">วัสดุงานบ้านงานครัว</option>
             </select>
           </div>
 
@@ -122,8 +137,8 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
               รายละเอียด
             </label>
             <textarea
-              name="description"
-              value={formData.description}
+              name="note"
+              value={formData.note}
               onChange={handleChange}
               rows={3}
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -148,12 +163,28 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
 
           <div>
             <label className="block text-sm font-medium text-white/80 mb-1">
+              สต็อกเริ่มต้น *
+            </label>
+            <input
+              type="number"
+              name="initial_stock"
+              value={formData.initial_stock}
+              onChange={handleChange}
+              required
+              min="0"
+              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="กรอกจำนวนสต็อกเริ่มต้น"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white/80 mb-1">
               สต็อกปัจจุบัน *
             </label>
             <input
               type="number"
-              name="stockQuantity"
-              value={formData.stockQuantity}
+              name="current_stock"
+              value={formData.current_stock}
               onChange={handleChange}
               required
               min="0"
@@ -168,8 +199,8 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
             </label>
             <input
               type="number"
-              name="minStockLevel"
-              value={formData.minStockLevel}
+              name="min_stock"
+              value={formData.min_stock}
               onChange={handleChange}
               required
               min="0"
@@ -184,8 +215,8 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
             </label>
             <input
               type="number"
-              name="pricePerUnit"
-              value={formData.pricePerUnit}
+              name="price"
+              value={formData.price}
               onChange={handleChange}
               required
               min="0"
@@ -197,43 +228,30 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
 
           <div>
             <label className="block text-sm font-medium text-white/80 mb-1">
-              ผู้จำหน่าย *
+              ตำแหน่งจัดเก็บ
             </label>
             <input
               type="text"
-              name="supplier"
-              value={formData.supplier}
+              name="location"
+              value={formData.location}
               onChange={handleChange}
-              required
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="กรอกชื่อผู้จำหน่าย"
+              placeholder="กรอกตำแหน่งจัดเก็บ"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-white/80 mb-1">
-              URL รูปภาพ
+              วันหมดอายุ
             </label>
             <input
-              type="url"
-              name="imageUrl"
-              value={formData.imageUrl}
+              type="date"
+              name="expiry_date"
+              value={formData.expiry_date}
               onChange={handleChange}
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="กรอก URL รูปภาพ"
             />
           </div>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            name="isActive"
-            checked={formData.isActive}
-            onChange={handleChange}
-            className="rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
-          />
-          <label className="text-sm text-white/80">วัสดุใช้งานได้</label>
         </div>
 
         <div className="flex space-x-3 pt-4">
