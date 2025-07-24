@@ -80,18 +80,17 @@ export function BudgetRequestForm({ isOpen, onClose, onSuccess }: BudgetRequestF
       const newRequest = await BudgetService.createRequest(requestData);
 
       // ส่งอีเมลแจ้งผู้อนุมัติ
-      const approvalUrl = EmailService.generateApprovalUrl(newRequest.id);
-      
       await EmailService.sendApprovalEmail({
         requestNo: newRequest.request_no || '',
         requester: formData.requester,
         approverEmail: formData.approverEmail,
+        approverName: 'ผู้อนุมัติ', // คุณสามารถเพิ่มฟิลด์นี้ในฟอร์มได้หากต้องการ
         accountCode: formData.accountCode,
         accountName: selectedAccount?.name || '',
         amount: formData.amount,
         requestDate: new Date().toLocaleDateString('th-TH'),
         items: items,
-        approvalUrl: approvalUrl
+        note: formData.note
       });
 
       alert('ส่งคำขอสำเร็จ! อีเมลแจ้งเตือนได้ถูกส่งไปยังผู้อนุมัติแล้ว');
