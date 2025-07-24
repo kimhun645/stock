@@ -22,6 +22,7 @@ export function useBudgetRequests() {
 
   const createRequest = async (requestData: Omit<BudgetRequest, 'id' | 'created_at'>) => {
     try {
+      setError(null);
       const newRequest = await BudgetService.createRequest(requestData);
       setRequests(prev => [newRequest, ...prev]);
       return newRequest;
@@ -33,6 +34,7 @@ export function useBudgetRequests() {
 
   const approveRequest = async (requestId: string, remark?: string, approverName?: string) => {
     try {
+      setError(null);
       await BudgetService.addApproval({
         request_id: requestId,
         decision: 'APPROVE',
@@ -48,6 +50,7 @@ export function useBudgetRequests() {
 
   const rejectRequest = async (requestId: string, remark?: string, approverName?: string) => {
     try {
+      setError(null);
       await BudgetService.addApproval({
         request_id: requestId,
         decision: 'REJECT',
@@ -63,6 +66,7 @@ export function useBudgetRequests() {
 
   const getApprovals = async (requestId: string): Promise<Approval[]> => {
     try {
+      setError(null);
       return await BudgetService.getApprovals(requestId);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดในการดึงข้อมูลการอนุมัติ');
@@ -72,6 +76,7 @@ export function useBudgetRequests() {
 
   const deleteRequest = async (requestId: string) => {
     try {
+      setError(null);
       await BudgetService.deleteRequest(requestId);
       setRequests(prev => prev.filter(req => req.id !== requestId));
     } catch (err) {

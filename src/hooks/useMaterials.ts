@@ -22,6 +22,7 @@ export function useMaterials() {
 
   const addMaterial = async (materialData: Omit<Material, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      setError(null);
       const newMaterial = await MaterialService.createMaterial(materialData);
       setMaterials(prev => [...prev, newMaterial]);
       return newMaterial;
@@ -33,6 +34,7 @@ export function useMaterials() {
 
   const updateMaterial = async (id: string, updates: Partial<Material>) => {
     try {
+      setError(null);
       const updatedMaterial = await MaterialService.updateMaterial(id, updates);
       setMaterials(prev => prev.map(m => m.id === id ? updatedMaterial : m));
       return updatedMaterial;
@@ -44,6 +46,7 @@ export function useMaterials() {
 
   const deleteMaterial = async (id: string) => {
     try {
+      setError(null);
       await MaterialService.deleteMaterial(id);
       setMaterials(prev => prev.filter(m => m.id !== id));
     } catch (err) {
@@ -54,6 +57,7 @@ export function useMaterials() {
 
   const findByBarcode = async (barcode: string) => {
     try {
+      setError(null);
       return await MaterialService.findByBarcode(barcode);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดในการค้นหาบาร์โค้ด');

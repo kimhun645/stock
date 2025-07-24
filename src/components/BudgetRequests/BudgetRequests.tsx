@@ -39,8 +39,50 @@ export function BudgetRequests() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      <div className="space-y-6">
+        {/* Header Skeleton */}
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="h-8 w-56 bg-white/10 rounded animate-pulse mb-2"></div>
+            <div className="h-4 w-80 bg-white/10 rounded animate-pulse"></div>
+          </div>
+          <div className="h-10 w-36 bg-white/10 rounded animate-pulse"></div>
+        </div>
+        
+        {/* Search Skeleton */}
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6">
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+            <div className="flex-1 h-10 bg-white/10 rounded animate-pulse"></div>
+            <div className="h-10 w-32 bg-white/10 rounded animate-pulse"></div>
+          </div>
+        </div>
+        
+        {/* Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6">
+              <div className="space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-2">
+                    <div className="h-6 w-24 bg-white/10 rounded animate-pulse"></div>
+                    <div className="h-4 w-32 bg-white/10 rounded animate-pulse"></div>
+                  </div>
+                  <div className="h-6 w-20 bg-white/10 rounded animate-pulse"></div>
+                </div>
+                <div className="space-y-3">
+                  <div className="h-4 w-full bg-white/10 rounded animate-pulse"></div>
+                  <div className="h-4 w-3/4 bg-white/10 rounded animate-pulse"></div>
+                  <div className="h-4 w-1/2 bg-white/10 rounded animate-pulse"></div>
+                </div>
+                <div className="flex justify-between items-center pt-2">
+                  <div className="h-4 w-16 bg-white/10 rounded animate-pulse"></div>
+                  <div className="h-6 w-24 bg-white/10 rounded animate-pulse"></div>
+                </div>
+                <div className="h-8 w-full bg-white/10 rounded animate-pulse"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

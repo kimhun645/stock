@@ -11,9 +11,10 @@ interface MaterialFormProps {
   onSubmit: (material: Omit<Material, 'id' | 'created_at' | 'updated_at'>) => void;
   initialData?: Material;
   mode: 'create' | 'edit';
+  isSubmitting?: boolean;
 }
 
-export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: MaterialFormProps) {
+export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode, isSubmitting = false }: MaterialFormProps) {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [formData, setFormData] = useState({
     name: initialData?.name || '',
@@ -277,10 +278,17 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
         </div>
 
         <div className="flex space-x-3 pt-4">
-          <Button type="submit" variant="primary" className="flex-1">
-            {mode === 'create' ? 'เพิ่มวัสดุ' : 'อัปเดตวัสดุ'}
+          <Button type="submit" variant="primary" className="flex-1" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <div className="flex items-center justify-center space-x-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <span>{mode === 'create' ? 'กำลังเพิ่ม...' : 'กำลังอัปเดต...'}</span>
+              </div>
+            ) : (
+              mode === 'create' ? 'เพิ่มวัสดุ' : 'อัปเดตวัสดุ'
+            )}
           </Button>
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button type="button" variant="secondary" onClick={onClose} disabled={isSubmitting}>
             ยกเลิก
           </Button>
         </div>

@@ -381,10 +381,13 @@ export function BudgetRequestForm({ isOpen, onClose, onSuccess }: BudgetRequestF
             <Button
               onClick={handleConfirmSubmit}
               disabled={isSubmitting}
-              className="flex-1 flex items-center justify-center space-x-2"
+              className="flex-1 flex items-center justify-center space-x-2 min-h-[40px]"
             >
               {isSubmitting ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <div className="flex items-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <span>กำลังส่งคำขอ...</span>
+                </div>
               ) : (
                 <>
                   <Send className="w-4 h-4" />

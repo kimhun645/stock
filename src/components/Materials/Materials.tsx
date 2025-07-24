@@ -13,6 +13,7 @@ export function Materials() {
   const [editingMaterial, setEditingMaterial] = useState<SupabaseMaterial | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const filteredMaterials = materials.filter(material => {
     const matchesSearch = material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -26,10 +27,13 @@ export function Materials() {
 
   const handleAddMaterial = async (materialData: Omit<SupabaseMaterial, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      setIsSubmitting(true);
       await addMaterial(materialData);
       alert('เพิ่มวัสดุสำเร็จ');
     } catch (error) {
       alert('เกิดข้อผิดพลาดในการเพิ่มวัสดุ');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -37,11 +41,14 @@ export function Materials() {
     if (!editingMaterial) return;
 
     try {
+      setIsSubmitting(true);
       await updateMaterial(editingMaterial.id, materialData);
       setEditingMaterial(null);
       alert('อัปเดตวัสดุสำเร็จ');
     } catch (error) {
       alert('เกิดข้อผิดพลาดในการอัปเดตวัสดุ');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -51,10 +58,13 @@ export function Materials() {
 
     if (confirm(`คุณแน่ใจหรือไม่ที่จะลบวัสดุ ${material.name}?`)) {
       try {
+        setIsSubmitting(true);
         await deleteMaterial(materialId);
         alert('ลบวัสดุสำเร็จ');
       } catch (error) {
         alert('เกิดข้อผิดพลาดในการลบวัสดุ');
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
@@ -76,8 +86,43 @@ export function Materials() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      <div className="space-y-6">
+        {/* Header Skeleton */}
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="h-8 w-48 bg-white/10 rounded animate-pulse mb-2"></div>
+            <div className="h-4 w-64 bg-white/10 rounded animate-pulse"></div>
+          </div>
+          <div className="h-10 w-32 bg-white/10 rounded animate-pulse"></div>
+        </div>
+        
+        {/* Search Skeleton */}
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 h-10 bg-white/10 rounded animate-pulse"></div>
+            <div className="h-10 w-32 bg-white/10 rounded animate-pulse"></div>
+          </div>
+        </div>
+        
+        {/* Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-16 h-16 bg-white/10 rounded-lg animate-pulse"></div>
+                <div className="flex-1 space-y-3">
+                  <div className="h-6 w-3/4 bg-white/10 rounded animate-pulse"></div>
+                  <div className="h-4 w-1/2 bg-white/10 rounded animate-pulse"></div>
+                  <div className="h-4 w-full bg-white/10 rounded animate-pulse"></div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="h-4 bg-white/10 rounded animate-pulse"></div>
+                    <div className="h-4 bg-white/10 rounded animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -169,6 +214,7 @@ export function Materials() {
         onSubmit={editingMaterial ? handleEditMaterial : handleAddMaterial}
         initialData={editingMaterial || undefined}
         mode={editingMaterial ? 'edit' : 'create'}
+        isSubmitting={isSubmitting}
       />
     </div>
   );
