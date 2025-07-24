@@ -155,7 +155,7 @@ export function Materials() {
           <p className="text-white/60 mb-4">
             {searchTerm || categoryFilter ? 'ไม่พบวัสดุที่ตรงกับเงื่อนไขการค้นหา' : 'ยังไม่มีวัสดุในระบบ'}
           </p>
-          <Button onClick={openAddForm} className="flex items-center space-x-2">
+          <Button onClick={() => setIsFormOpen(true)} className="flex items-center space-x-2">
             <Plus className="w-4 h-4" />
             <span>เพิ่มวัสดุแรก</span>
           </Button>
