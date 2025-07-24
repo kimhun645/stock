@@ -9,6 +9,7 @@ import { Users } from './components/Users/Users';
 import { Reports } from './components/Reports/Reports';
 import { Notifications } from './components/Notifications/Notifications';
 import { Settings } from './components/Settings/Settings';
+import { BudgetRequests } from './components/BudgetRequests/BudgetRequests';
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -19,6 +20,7 @@ function App() {
       case 'dashboard': return 'หน้าหลัก';
       case 'materials': return 'จัดการวัสดุ';
       case 'requests': return 'คำขอเบิกวัสดุ';
+      case 'budget-requests': return 'การขอใช้งบประมาณ';
       case 'users': return 'จัดการผู้ใช้';
       case 'reports': return 'รายงาน';
       case 'notifications': return 'การแจ้งเตือน';
@@ -35,6 +37,8 @@ function App() {
         return <Materials />;
       case 'requests':
         return <Requests />;
+      case 'budget-requests':
+        return <BudgetRequests />;
       case 'users':
         return <Users />;
       case 'reports':
