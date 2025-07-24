@@ -47,8 +47,8 @@ export function Reports() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Reports & Analytics</h2>
-          <p className="text-white/60">Generate comprehensive reports and analyze data</p>
+          <h2 className="text-2xl font-bold text-white">รายงานและการวิเคราะห์</h2>
+          <p className="text-white/60">สร้างรายงานและวิเคราะห์ข้อมูลการใช้วัสดุ</p>
         </div>
         <div className="flex space-x-2">
           <Button
@@ -57,7 +57,7 @@ export function Reports() {
             className="flex items-center space-x-2"
           >
             <Download className="w-4 h-4" />
-            <span>Export PDF</span>
+            <span>ส่งออก PDF</span>
           </Button>
           <Button
             variant="secondary"
@@ -65,18 +65,18 @@ export function Reports() {
             className="flex items-center space-x-2"
           >
             <Download className="w-4 h-4" />
-            <span>Export Excel</span>
+            <span>ส่งออก Excel</span>
           </Button>
         </div>
       </div>
 
       {/* Report Configuration */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Report Configuration</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">การตั้งค่ารายงาน</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Report Type */}
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-3">Report Type</label>
+            <label className="block text-sm font-medium text-white/80 mb-3">ประเภทรายงาน</label>
             <div className="space-y-2">
               {reportTypes.map((type) => {
                 const Icon = type.icon;
@@ -100,7 +100,7 @@ export function Reports() {
 
           {/* Time Period */}
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-3">Time Period</label>
+            <label className="block text-sm font-medium text-white/80 mb-3">ช่วงเวลา</label>
             <div className="space-y-2">
               {periods.map((period) => (
                 <button
@@ -122,7 +122,7 @@ export function Reports() {
 
         <div className="mt-6">
           <Button onClick={generateReport} className="w-full">
-            Generate Report
+            สร้างรายงาน
           </Button>
         </div>
       </Card>

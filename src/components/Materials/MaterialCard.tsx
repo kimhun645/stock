@@ -52,7 +52,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
             <div className="mb-3">
               <div className="flex items-center space-x-2 p-2 bg-white/5 rounded-lg">
                 <Scan className="w-4 h-4 text-white/60" />
-                <span className="text-white/80 font-mono text-sm">{material.barcode}</span>
+                <span className="text-white/80 font-mono text-sm">รหัส: {material.barcode}</span>
               </div>
             </div>
           )}
@@ -72,7 +72,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
               </p>
             </div>
             <div>
-              <p className="text-white/60 text-xs">ราคาต่อหน่วย</p>
+              <p className="text-white/60 text-xs">ราคา/หน่วย</p>
               <p className="text-white font-medium">₿{material.pricePerUnit}</p>
             </div>
             <div>
@@ -86,7 +86,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
             <div className="flex justify-between items-center mb-1">
               <span className="text-white/60 text-xs">ระดับสต็อก</span>
               <span className="text-white/60 text-xs">
-                {Math.round((material.stockQuantity / (material.minStockLevel * 3)) * 100)}%
+                {Math.round((material.stockQuantity / Math.max(material.minStockLevel * 3, 1)) * 100)}%
               </span>
             </div>
             <div className="w-full bg-white/10 rounded-full h-2">
@@ -98,7 +98,7 @@ export function MaterialCard({ material, onEdit, onDelete }: MaterialCardProps) 
                 }`}
                 style={{
                   width: `${Math.min(
-                    (material.stockQuantity / (material.minStockLevel * 3)) * 100,
+                    (material.stockQuantity / Math.max(material.minStockLevel * 3, 1)) * 100,
                     100
                   )}%`
                 }}

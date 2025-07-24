@@ -154,14 +154,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       {
         id: '1',
         barcode: '1234567890123',
-        name: 'A4 Paper',
-        category: 'Office Supplies',
-        description: 'High-quality A4 printing paper',
-        unit: 'Ream',
+        name: 'กระดาษ A4',
+        category: 'เครื่องเขียน',
+        description: 'กระดาษ A4 คุณภาพสูงสำหรับการพิมพ์',
+        unit: 'รีม',
         stockQuantity: 50,
         minStockLevel: 10,
         pricePerUnit: 120,
-        supplier: 'Office Plus Co.',
+        supplier: 'บริษัท ออฟฟิศ พลัส จำกัด',
         imageUrl: 'https://images.pexels.com/photos/518244/pexels-photo-518244.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=1',
         isActive: true,
         lastUpdated: new Date()
@@ -169,14 +169,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       {
         id: '2',
         barcode: '2345678901234',
-        name: 'Laptop Computer',
-        category: 'IT Equipment',
-        description: 'Dell Latitude 7420 Business Laptop',
-        unit: 'Unit',
+        name: 'คอมพิวเตอร์โน้ตบุ๊ก',
+        category: 'อุปกรณ์ไอที',
+        description: 'Dell Latitude 7420 โน้ตบุ๊กสำหรับธุรกิจ',
+        unit: 'เครื่อง',
         stockQuantity: 5,
         minStockLevel: 2,
         pricePerUnit: 35000,
-        supplier: 'Tech Solutions Ltd.',
+        supplier: 'บริษัท เทค โซลูชั่น จำกัด',
         imageUrl: 'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=1',
         isActive: true,
         lastUpdated: new Date()
@@ -184,14 +184,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       {
         id: '3',
         barcode: '3456789012345',
-        name: 'Marker Pen',
-        category: 'Office Supplies',
-        description: 'Permanent marker pen set',
-        unit: 'Set',
+        name: 'ปากกาเมจิก',
+        category: 'เครื่องเขียน',
+        description: 'ชุดปากกาเมจิกถาวร',
+        unit: 'ชุด',
         stockQuantity: 25,
         minStockLevel: 5,
         pricePerUnit: 85,
-        supplier: 'Stationery World',
+        supplier: 'สเตชันเนอรี่ เวิลด์',
         imageUrl: 'https://images.pexels.com/photos/159751/book-address-book-learning-learn-159751.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=1',
         isActive: true,
         lastUpdated: new Date()
@@ -203,20 +203,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       currentUser,
       {
         id: '2',
-        name: 'Sarah Wilson',
+        name: 'สุดา วิลสัน',
         email: 'sarah.wilson@company.com',
         role: 'employee',
-        department: 'HR',
+        department: 'ทรัพยากรบุคคล',
         avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1',
         isActive: true,
         createdAt: new Date('2024-01-10')
       },
       {
         id: '3',
-        name: 'Mike Johnson',
+        name: 'วิชัย จอห์นสัน',
         email: 'mike.johnson@company.com',
         role: 'admin',
-        department: 'Finance',
+        department: 'การเงิน',
         avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1',
         isActive: true,
         createdAt: new Date('2024-01-05')
@@ -230,7 +230,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         requestNumber: 'REQ-001',
         requesterId: '2',
         requester: users[1],
-        department: 'HR',
+        department: 'ทรัพยากรบุคคล',
         requestDate: new Date('2024-01-15'),
         items: [
           {
@@ -243,7 +243,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         status: 'pending',
         approvals: [],
         totalValue: 1200,
-        reason: 'Office supplies for new employees',
+        reason: 'เครื่องเขียนสำหรับพนักงานใหม่',
         urgencyLevel: 'medium',
         expectedDate: new Date('2024-01-20')
       },
@@ -252,7 +252,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         requestNumber: 'REQ-002',
         requesterId: '3',
         requester: users[2],
-        department: 'Finance',
+        department: 'การเงิน',
         requestDate: new Date('2024-01-14'),
         items: [
           {
@@ -265,7 +265,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         status: 'approved',
         approvals: [],
         totalValue: 70000,
-        reason: 'Replacement laptops for finance team',
+        reason: 'เปลี่ยนโน้ตบุ๊กสำหรับทีมการเงิน',
         urgencyLevel: 'high',
         expectedDate: new Date('2024-01-18')
       }
@@ -286,12 +286,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       lowStockItems: materials.filter(m => m.stockQuantity <= m.minStockLevel).length,
       totalValue: requests.reduce((sum, r) => sum + r.totalValue, 0),
       monthlyTrend: [
-        { month: 'Jan', requests: 15, value: 450000 },
-        { month: 'Feb', requests: 22, value: 680000 },
-        { month: 'Mar', requests: 18, value: 520000 },
-        { month: 'Apr', requests: 24, value: 750000 },
-        { month: 'May', requests: 20, value: 620000 },
-        { month: 'Jun', requests: 28, value: 890000 }
+        { month: 'ม.ค.', requests: 15, value: 450000 },
+        { month: 'ก.พ.', requests: 22, value: 680000 },
+        { month: 'มี.ค.', requests: 18, value: 520000 },
+        { month: 'เม.ย.', requests: 24, value: 750000 },
+        { month: 'พ.ค.', requests: 20, value: 620000 },
+        { month: 'มิ.ย.', requests: 28, value: 890000 }
       ]
     };
 

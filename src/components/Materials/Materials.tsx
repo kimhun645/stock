@@ -1,239 +1,194 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { useNotification } from '../../hooks/useNotification';
-import { Material } from '../../types';
-import { MaterialCard } from './MaterialCard';
-import { MaterialForm } from './MaterialForm';
-import { BarcodeScanner } from '../UI/BarcodeScanner';
-import { Button } from '../UI/Button';
 import { Card } from '../UI/Card';
-import { Plus, Search, Filter, Scan } from 'lucide-react';
+import { Button } from '../UI/Button';
+import { Bell, CheckCircle, AlertTriangle, Info, XCircle, Trash2, BookMarked as MarkAsRead } from 'lucide-react';
 
-export function Materials() {
-  const { state, dispatch } = useApp();
-  const { addNotification } = useNotification();
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingMaterial, setEditingMaterial] = useState<Material | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
+export function Notifications() {
+  const { state } = useApp();
+  const { markAsRead } = useNotification();
 
-  const filteredMaterials = state.materials.filter(material => {
-    const matchesSearch = material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         material.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !selectedCategory || material.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  // Also filter by barcode if searching
-  const finalFilteredMaterials = filteredMaterials.filter(material => {
-    if (!searchTerm) return true;
-    const matchesBarcode = material.barcode?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesBarcode || 
-           material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           material.description.toLowerCase().includes(searchTerm.toLowerCase());
-  });
-
-  const categories = Array.from(new Set(state.materials.map(m => m.category)));
-
-  const handleAddMaterial = (materialData: Omit<Material, 'id' | 'lastUpdated'>) => {
-    const newMaterial: Material = {
-      ...materialData,
-      id: Date.now().toString(),
-      lastUpdated: new Date()
-    };
-
-    dispatch({ type: 'ADD_MATERIAL', payload: newMaterial });
-    addNotification({
-      userId: state.currentUser?.id || '',
-      title: 'Material Added',
-      message: `${newMaterial.name} has been added to inventory`,
-      type: 'success'
-    });
-  };
-
-  const handleEditMaterial = (materialData: Omit<Material, 'id' | 'lastUpdated'>) => {
-    if (!editingMaterial) return;
-
-    const updatedMaterial: Material = {
-      ...materialData,
-      id: editingMaterial.id,
-      lastUpdated: new Date()
-    };
-
-    dispatch({ type: 'UPDATE_MATERIAL', payload: updatedMaterial });
-    addNotification({
-      userId: state.currentUser?.id || '',
-      title: 'Material Updated',
-      message: `${updatedMaterial.name} has been updated`,
-      type: 'success'
-    });
-    setEditingMaterial(null);
-  };
-
-  const handleDeleteMaterial = (materialId: string) => {
-    const material = state.materials.find(m => m.id === materialId);
-    if (!material) return;
-
-    if (confirm(`Are you sure you want to delete ${material.name}?`)) {
-      dispatch({ type: 'DELETE_MATERIAL', payload: materialId });
-      addNotification({
-        userId: state.currentUser?.id || '',
-        title: 'Material Deleted',
-        message: `${material.name} has been removed from inventory`,
-        type: 'info'
-      });
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case 'success':
+        return <CheckCircle className="w-5 h-5 text-green-400" />;
+      case 'warning':
+        return <AlertTriangle className="w-5 h-5 text-yellow-400" />;
+      case 'error':
+        return <XCircle className="w-5 h-5 text-red-400" />;
+      case 'info':
+      default:
+        return <Info className="w-5 h-5 text-blue-400" />;
     }
   };
 
-  const openEditForm = (material: Material) => {
-    setEditingMaterial(material);
-    setIsFormOpen(true);
-  };
-
-  const closeForm = () => {
-    setIsFormOpen(false);
-    setEditingMaterial(null);
-  };
-
-  const handleBarcodeScanned = (barcode: string) => {
-    // Search for material by barcode
-    const material = state.materials.find(m => m.barcode === barcode);
-    if (material) {
-      // If found, highlight or scroll to the material
-      setSearchTerm(barcode);
-      addNotification({
-        userId: state.currentUser?.id || '',
-        title: 'Material Found',
-        message: `Found material: ${material.name}`,
-        type: 'success'
-      });
-    } else {
-      // If not found, offer to create new material with this barcode
-      if (confirm(`Material with barcode ${barcode} not found. Would you like to add it?`)) {
-        setEditingMaterial({ 
-          id: '', 
-          barcode, 
-          name: '', 
-          category: '', 
-          description: '', 
-          unit: '', 
-          stockQuantity: 0, 
-          minStockLevel: 0, 
-          pricePerUnit: 0, 
-          supplier: '', 
-          isActive: true, 
-          lastUpdated: new Date() 
-        } as Material);
-        setIsFormOpen(true);
-      }
+  const getNotificationBorderColor = (type: string) => {
+    switch (type) {
+      case 'success':
+        return 'border-green-500/30';
+      case 'warning':
+        return 'border-yellow-500/30';
+      case 'error':
+        return 'border-red-500/30';
+      case 'info':
+      default:
+        return 'border-blue-500/30';
     }
-    setShowBarcodeScanner(false);
   };
+
+  const unreadNotifications = state.notifications.filter(n => !n.isRead);
+  const readNotifications = state.notifications.filter(n => n.isRead);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">จัดการวัสดุ</h2>
-          <p className="text-white/60">จัดการวัสดุคลังสินค้าและระดับสต็อก</p>
+          <h2 className="text-2xl font-bold text-white">การแจ้งเตือน</h2>
+          <p className="text-white/60">ติดตามกิจกรรมและการแจ้งเตือนของระบบ</p>
         </div>
-        <div className="flex space-x-3">
-          <Button
-            variant="secondary"
-            onClick={() => setShowBarcodeScanner(true)}
-            className="flex items-center space-x-2"
-          >
-            <Scan className="w-5 h-5" />
-            <span>สแกนบาร์โค้ด</span>
-          </Button>
-          <Button
-            onClick={() => setIsFormOpen(true)}
-            className="flex items-center space-x-2"
-          >
-            <Plus className="w-5 h-5" />
-            <span>เพิ่มวัสดุ</span>
-          </Button>
+        <div className="flex items-center space-x-2">
+          <Bell className="w-5 h-5 text-white/60" />
+          <span className="text-white/80">
+          </span>
         </div>
       </div>
 
-      {/* Filters */}
-      <Card className="p-6">
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          {/* Search */}
-          <div className="flex-1 relative">
-            <Search className="w-5 h-5 text-white/60 absolute left-3 top-1/2 transform -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="ค้นหาวัสดุ..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* Category Filter */}
-          <div className="relative">
-            <Filter className="w-5 h-5 text-white/60 absolute left-3 top-1/2 transform -translate-y-1/2" />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="pl-10 pr-8 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">หมวดหมู่ทั้งหมด</option>
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
+      {/* Unread Notifications */}
+      {unreadNotifications.length > 0 && (
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-4">Unread Notifications</h3>
+          <div className="space-y-3">
+            {unreadNotifications.map((notification) => (
+              <Card 
+                key={notification.id} 
+                className={`p-4 border-l-4 ${getNotificationBorderColor(notification.type)} bg-white/5`}
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 mt-1">
+                    {getNotificationIcon(notification.type)}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-white font-medium">{notification.title}</h4>
+                    <p className="text-white/70 text-sm mt-1">{notification.message}</p>
+                    <p className="text-white/50 text-xs mt-2">
+                      {notification.createdAt.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => markAsRead(notification.id)}
+                      className="flex items-center space-x-1"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Mark as Read</span>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
-      </Card>
+      )}
 
-      {/* Materials Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {finalFilteredMaterials.map(material => (
-          <MaterialCard
-            key={material.id}
-            material={material}
-            onEdit={openEditForm}
-            onDelete={handleDeleteMaterial}
-          />
-        ))}
-      </div>
+      {/* Read Notifications */}
+      {readNotifications.length > 0 && (
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-4">Read Notifications</h3>
+          <div className="space-y-3">
+            {readNotifications.map((notification) => (
+              <Card 
+                key={notification.id} 
+                className="p-4 opacity-60 hover:opacity-80 transition-opacity"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 mt-1">
+                    {getNotificationIcon(notification.type)}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-white font-medium">{notification.title}</h4>
+                    <p className="text-white/70 text-sm mt-1">{notification.message}</p>
+                    <p className="text-white/50 text-xs mt-2">
+                      {notification.createdAt.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      className="flex items-center space-x-1"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
-      {finalFilteredMaterials.length === 0 && (
+      {/* Empty State */}
+      {state.notifications.length === 0 && (
         <Card className="p-12 text-center">
-          <p className="text-white/60 text-lg">
-            {searchTerm || selectedCategory ? 'ไม่พบวัสดุที่ตรงกับเงื่อนไขการค้นหา' : 'ยังไม่มีวัสดุในระบบ'}
-          </p>
-          {!searchTerm && !selectedCategory && (
-            <Button
-              onClick={() => setIsFormOpen(true)}
-              className="mt-4"
-            >
-              เพิ่มวัสดุรายการแรก
-            </Button>
-          )}
+          <Bell className="w-16 h-16 text-white/30 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">No Notifications</h3>
+          <p className="text-white/60">You're all caught up! No new notifications at this time.</p>
         </Card>
       )}
 
-      {/* Material Form Modal */}
-      <MaterialForm
-        isOpen={isFormOpen}
-        onClose={closeForm}
-        onSubmit={editingMaterial ? handleEditMaterial : handleAddMaterial}
-        initialData={editingMaterial || undefined}
-        mode={editingMaterial ? 'edit' : 'create'}
-      />
-
-      {/* Barcode Scanner */}
-      <BarcodeScanner
-        isOpen={showBarcodeScanner}
-        onClose={() => setShowBarcodeScanner(false)}
-        onScan={handleBarcodeScanned}
-        title="Scan Material Barcode"
-      />
+      {/* Notification Settings */}
+      <Card className="p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">Notification Settings</h3>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="text-white font-medium">Material Requests</h4>
+              <p className="text-white/60 text-sm">Get notified about new material requests</p>
+            </div>
+            <input
+              type="checkbox"
+              defaultChecked
+              className="rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="text-white font-medium">Low Stock Alerts</h4>
+              <p className="text-white/60 text-sm">Get notified when materials are running low</p>
+            </div>
+            <input
+              type="checkbox"
+              defaultChecked
+              className="rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="text-white font-medium">Approval Updates</h4>
+              <p className="text-white/60 text-sm">Get notified about request approvals and rejections</p>
+            </div>
+            <input
+              type="checkbox"
+              defaultChecked
+              className="rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="text-white font-medium">System Updates</h4>
+              <p className="text-white/60 text-sm">Get notified about system maintenance and updates</p>
+            </div>
+            <input
+              type="checkbox"
+              className="rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
+            />
+          </div>
+        title="สแกนบาร์โค้ดวัสดุ"
+      </Card>
     </div>
   );
 }

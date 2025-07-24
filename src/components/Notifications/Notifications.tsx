@@ -45,13 +45,13 @@ export function Notifications() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Notifications</h2>
-          <p className="text-white/60">Stay updated with system activities and alerts</p>
+          <h2 className="text-2xl font-bold text-white">การแจ้งเตือน</h2>
+          <p className="text-white/60">ติดตามกิจกรรมและการแจ้งเตือนของระบบ</p>
         </div>
         <div className="flex items-center space-x-2">
           <Bell className="w-5 h-5 text-white/60" />
           <span className="text-white/80">
-            {unreadNotifications.length} unread
+            {unreadNotifications.length} ยังไม่อ่าน
           </span>
         </div>
       </div>
@@ -59,7 +59,7 @@ export function Notifications() {
       {/* Unread Notifications */}
       {unreadNotifications.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold text-white mb-4">Unread Notifications</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">การแจ้งเตือนที่ยังไม่อ่าน</h3>
           <div className="space-y-3">
             {unreadNotifications.map((notification) => (
               <Card 
@@ -85,7 +85,7 @@ export function Notifications() {
                       className="flex items-center space-x-1"
                     >
                       <CheckCircle className="w-4 h-4" />
-                      <span>Mark as Read</span>
+                      <span>ทำเครื่องหมายว่าอ่านแล้ว</span>
                     </Button>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ export function Notifications() {
       {/* Read Notifications */}
       {readNotifications.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold text-white mb-4">Read Notifications</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">การแจ้งเตือนที่อ่านแล้ว</h3>
           <div className="space-y-3">
             {readNotifications.map((notification) => (
               <Card 
@@ -136,19 +136,19 @@ export function Notifications() {
       {state.notifications.length === 0 && (
         <Card className="p-12 text-center">
           <Bell className="w-16 h-16 text-white/30 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-white mb-2">No Notifications</h3>
-          <p className="text-white/60">You're all caught up! No new notifications at this time.</p>
+          <h3 className="text-xl font-semibold text-white mb-2">ไม่มีการแจ้งเตือน</h3>
+          <p className="text-white/60">คุณได้อ่านการแจ้งเตือนทั้งหมดแล้ว ไม่มีการแจ้งเตือนใหม่ในขณะนี้</p>
         </Card>
       )}
 
       {/* Notification Settings */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Notification Settings</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">การตั้งค่าการแจ้งเตือน</h3>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-white font-medium">Material Requests</h4>
-              <p className="text-white/60 text-sm">Get notified about new material requests</p>
+              <h4 className="text-white font-medium">คำขอวัสดุ</h4>
+              <p className="text-white/60 text-sm">รับการแจ้งเตือนเมื่อมีคำขอวัสดุใหม่</p>
             </div>
             <input
               type="checkbox"
@@ -158,8 +158,8 @@ export function Notifications() {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-white font-medium">Low Stock Alerts</h4>
-              <p className="text-white/60 text-sm">Get notified when materials are running low</p>
+              <h4 className="text-white font-medium">แจ้งเตือนสต็อกต่ำ</h4>
+              <p className="text-white/60 text-sm">รับการแจ้งเตือนเมื่อวัสดุใกล้หมด</p>
             </div>
             <input
               type="checkbox"
@@ -169,8 +169,8 @@ export function Notifications() {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-white font-medium">Approval Updates</h4>
-              <p className="text-white/60 text-sm">Get notified about request approvals and rejections</p>
+              <h4 className="text-white font-medium">อัปเดตการอนุมัติ</h4>
+              <p className="text-white/60 text-sm">รับการแจ้งเตือนเมื่อคำขอได้รับการอนุมัติหรือปฏิเสธ</p>
             </div>
             <input
               type="checkbox"
@@ -180,8 +180,8 @@ export function Notifications() {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-white font-medium">System Updates</h4>
-              <p className="text-white/60 text-sm">Get notified about system maintenance and updates</p>
+              <h4 className="text-white font-medium">อัปเดตระบบ</h4>
+              <p className="text-white/60 text-sm">รับการแจ้งเตือนเกี่ยวกับการบำรุงรักษาและอัปเดตระบบ</p>
             </div>
             <input
               type="checkbox"

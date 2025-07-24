@@ -94,7 +94,7 @@ export function Requests() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white">คำขอเบิกวัสดุ</h2>
-          <p className="text-white/60">ส่งคำขอและจัดการคำขอเบิกวัสดุ</p>
+          <p className="text-white/60">ส่งคำขอใหม่และติดตามสถานะคำขอเบิกวัสดุ</p>
         </div>
         <Button
           onClick={() => setIsFormOpen(true)}
@@ -113,7 +113,7 @@ export function Requests() {
             <Search className="w-5 h-5 text-white/60 absolute left-3 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
-              placeholder="ค้นหาคำขอ..."
+              placeholder="ค้นหาเลขที่คำขอ, ชื่อผู้ขอ หรือแผนก..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"

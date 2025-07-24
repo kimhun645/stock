@@ -18,12 +18,12 @@ export function Settings() {
   const [activeTab, setActiveTab] = useState('profile');
 
   const tabs = [
-    { id: 'profile', name: 'Profile', icon: User },
-    { id: 'notifications', name: 'Notifications', icon: Bell },
-    { id: 'security', name: 'Security', icon: Shield },
-    { id: 'system', name: 'System', icon: Database },
-    { id: 'appearance', name: 'Appearance', icon: Palette },
-    { id: 'general', name: 'General', icon: Globe }
+    { id: 'profile', name: 'โปรไฟล์', icon: User },
+    { id: 'notifications', name: 'การแจ้งเตือน', icon: Bell },
+    { id: 'security', name: 'ความปลอดภัย', icon: Shield },
+    { id: 'system', name: 'ระบบ', icon: Database },
+    { id: 'appearance', name: 'รูปแบบ', icon: Palette },
+    { id: 'general', name: 'ทั่วไป', icon: Globe }
   ];
 
   const renderTabContent = () => {
@@ -320,8 +320,8 @@ export function Settings() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-white">Settings</h2>
-        <p className="text-white/60">Manage your account and system preferences</p>
+        <h2 className="text-2xl font-bold text-white">ตั้งค่าระบบ</h2>
+        <p className="text-white/60">จัดการบัญชีผู้ใช้และการตั้งค่าระบบ</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

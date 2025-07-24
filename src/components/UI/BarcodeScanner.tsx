@@ -12,7 +12,7 @@ interface BarcodeScannerProps {
   title?: string;
 }
 
-export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode' }: BarcodeScannerProps) {
+export function BarcodeScanner({ isOpen, onClose, onScan, title = 'สแกนบาร์โค้ด' }: BarcodeScannerProps) {
   const { isScanning, error, lastScannedCode, videoRef, startScanning, stopScanning, scanFromImage } = useBarcodeScanner();
   const [scanMode, setScanMode] = useState<'camera' | 'upload'>('camera');
   const [scannedResult, setScannedResult] = useState<string | null>(null);
@@ -75,7 +75,7 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
             className="flex items-center space-x-2 flex-1"
           >
             <Camera className="w-4 h-4" />
-            <span>Camera</span>
+            <span>กล้อง</span>
           </Button>
           <Button
             variant={scanMode === 'upload' ? 'primary' : 'secondary'}
@@ -83,7 +83,7 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
             className="flex items-center space-x-2 flex-1"
           >
             <Upload className="w-4 h-4" />
-            <span>Upload Image</span>
+            <span>อัปโหลดรูปภาพ</span>
           </Button>
         </div>
 
@@ -137,15 +137,15 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
                       {scannedResult ? (
                         <span className="text-green-400 flex items-center justify-center space-x-2">
                           <CheckCircle className="w-4 h-4" />
-                          <span>Barcode scanned successfully!</span>
+                          <span>สแกนบาร์โค้ดสำเร็จ!</span>
                         </span>
                       ) : isScanning ? (
                         <span className="flex items-center justify-center space-x-2">
                           <Scan className="w-4 h-4 animate-pulse" />
-                          <span>Position barcode within the frame</span>
+                          <span>วางบาร์โค้ดให้อยู่ในกรอบ</span>
                         </span>
                       ) : (
-                        'Starting camera...'
+                        'กำลังเปิดกล้อง...'
                       )}
                     </p>
                   </div>
@@ -170,7 +170,7 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
             <div className="text-center">
               <div className="border-2 border-dashed border-white/30 rounded-lg p-8">
                 <Upload className="w-12 h-12 text-white/60 mx-auto mb-4" />
-                <p className="text-white/80 mb-4">Upload an image containing a barcode</p>
+                <p className="text-white/80 mb-4">อัปโหลดรูปภาพที่มีบาร์โค้ด</p>
                 <input
                   type="file"
                   accept="image/*"
@@ -180,7 +180,7 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
                 />
                 <label htmlFor="barcode-upload">
                   <Button variant="secondary" className="cursor-pointer">
-                    Choose Image
+                    เลือกรูปภาพ
                   </Button>
                 </label>
               </div>
@@ -198,7 +198,7 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
                 <div className="mt-4 p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
                   <div className="flex items-center justify-center space-x-2 text-green-400">
                     <CheckCircle className="w-4 h-4" />
-                    <span className="text-sm">Barcode detected: {scannedResult}</span>
+                    <span className="text-sm">ตรวจพบบาร์โค้ด: {scannedResult}</span>
                   </div>
                 </div>
               )}
@@ -211,7 +211,7 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
           <Card className="p-4 bg-green-500/10 border-green-500/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-400 font-medium">Scanned Barcode:</p>
+                <p className="text-green-400 font-medium">บาร์โค้ดที่สแกน:</p>
                 <p className="text-white font-mono text-lg">{scannedResult}</p>
               </div>
               <CheckCircle className="w-8 h-8 text-green-400" />
@@ -226,10 +226,10 @@ export function BarcodeScanner({ isOpen, onClose, onScan, title = 'Scan Barcode'
             onClick={handleManualInput}
             className="flex items-center space-x-2"
           >
-            <span>Manual Input</span>
+            <span>ป้อนด้วยตนเอง</span>
           </Button>
           <Button variant="secondary" onClick={handleClose} className="flex-1">
-            Cancel
+            ยกเลิก
           </Button>
         </div>
       </div>
