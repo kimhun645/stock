@@ -17,8 +17,13 @@ export class EmailService {
     items: Array<{ item: string; quantity: number }>;
     note?: string;
   }): Promise<void> {
+    // ✅ Validate email
+    if (!requestData.approverEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(requestData.approverEmail)) {
+      throw new Error('กรุณาระบุอีเมลผู้อนุมัติให้ถูกต้อง');
+    }
+
     try {
-      // สร้างตาราง HTML สำหรับรายการสินค้า
+      // ✅ Build HTML table for items
       const itemsTable = `
         <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
           <thead>
@@ -40,11 +45,12 @@ export class EmailService {
         </table>
       `;
 
-      // สร้าง URL สำหรับการอนุมัติและปฏิเสธ
+      // ✅ Build approve/reject URLs
       const baseUrl = window.location.origin;
       const approveUrl = `${baseUrl}/approve/${requestData.requestNo}?action=approve`;
       const rejectUrl = `${baseUrl}/approve/${requestData.requestNo}?action=reject`;
 
+      // ✅ Prepare template params
       const templateParams = {
         to_email: requestData.approverEmail,
         approver_name: requestData.approverName || 'ผู้อนุมัติ',
@@ -57,12 +63,16 @@ export class EmailService {
         reject_url: rejectUrl
       };
 
+      // ✅ Log params for debugging
+      console.log('Sending approval email with params:', templateParams);
+
+      // ✅ Send email
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
       console.log('Email sent successfully');
     } catch (error) {
-  console.error('Error sending email (real detail):', error);
-  // ส่งรายละเอียด error จริง กลับไปด้วย
-  throw new Error('ไม่สามารถส่งอีเมลได้: ' + (error?.text || error?.message || JSON.stringify(error)));
-}
+      // ✅ Show error detail for debugging
+      console.error('Error sending email (real detail):', error);
+      throw new Error('ไม่สามารถส่งอีเมลได้: ' + (error?.text || error?.message || JSON.stringify(error)));
+    }
   }
 }
