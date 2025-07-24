@@ -142,12 +142,8 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">เลือกหมวดหมู่</option>
-              <option value="เครื่องเขียน">เครื่องเขียน</option>
-              <option value="อุปกรณ์ไอที">อุปกรณ์ไอที</option>
-              <option value="เฟอร์นิเจอร์">เฟอร์นิเจอร์</option>
-              <option value="อุปกรณ์ซ่อมบำรุง">อุปกรณ์ซ่อมบำรุง</option>
-              <option value="อุปกรณ์ความปลอดภัย">อุปกรณ์ความปลอดภัย</option>
-              <option value="วัสดุงานบ้านงานครัว">วัสดุงานบ้านงานครัว</option>
+              <option value="วัสดุสำนักงาน">วัสดุสำนักงาน</option>
+              <option value="ยา">ยา</option>
             </select>
           </div>
 
@@ -262,14 +258,21 @@ export function MaterialForm({ isOpen, onClose, onSubmit, initialData, mode }: M
           <div>
             <label className="block text-sm font-medium text-white/80 mb-1">
               วันหมดอายุ
+              {formData.category === 'ยา' && <span className="text-red-400"> *</span>}
             </label>
             <input
               type="date"
               name="expiry_date"
               value={formData.expiry_date}
               onChange={handleChange}
+              required={formData.category === 'ยา'}
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            {formData.category === 'ยา' && (
+              <p className="text-white/60 text-xs mt-1">
+                * จำเป็นต้องระบุวันหมดอายุสำหรับยา
+              </p>
+            )}
           </div>
         </div>
 
