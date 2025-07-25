@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useBarcodeScanner } from '../../hooks/useBarcodeScanner';
-import { Modal } from './Modal';
+import Modal from './Modal';
 import { Button } from './Button';
 import { Card } from './Card';
 import { Camera, Upload, X, Scan, CheckCircle, AlertCircle } from 'lucide-react';
