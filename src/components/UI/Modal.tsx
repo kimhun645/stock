@@ -1,49 +1,52 @@
-import React from 'react';
-import { X } from 'lucide-react';
+import React from "react";
 
-interface ModalProps {
+type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
+  size?: "sm" | "md" | "lg";
   children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-}
+};
 
-export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
+export default function Modal({
+  isOpen,
+  onClose,
+  title,
+  size = "md",
+  children,
+}: ModalProps) {
   if (!isOpen) return null;
-
-  const sizeClasses = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl'
-  };
-
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        {/* Backdrop */}
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
-          onClick={onClose}
-        />
-
-        {/* Modal */}
-        <div className={`inline-block w-full ${sizeClasses[size]} p-6 my-8 overflow-hidden text-left align-middle bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl transform transition-all`}>
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-white">{title}</h3>
-            <button
-              onClick={onClose}
-              className="p-2 text-white/60 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="text-white">{children}</div>
+    <div
+      style={{
+        position: "fixed",
+        zIndex: 9999,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: "rgba(0,0,0,0.4)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          minWidth: size === "lg" ? 600 : size === "md" ? 400 : 280,
+          background: "#fff",
+          borderRadius: 8,
+          padding: 24,
+          maxWidth: "90vw",
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          {title && <h3>{title}</h3>}
+          <button onClick={onClose} style={{ fontSize: 18, background: "transparent", border: "none" }}>×</button>
         </div>
+        <div style={{ marginTop: 8 }}>{children}</div>
       </div>
     </div>
   );
