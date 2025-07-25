@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Material } from '../../lib/supabase';
 import { Button } from '../UI/Button';
-import { Modal } from '../UI/Modal';
+import Modal from '../UI/Modal';
 import { BarcodeScanner } from '../UI/BarcodeScanner';
 import { Scan } from 'lucide-react';
 
