@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User } from '../../types';
 import { Button } from '../UI/Button';
-import { Modal } from '../UI/Modal';
+import  Modal  from '../UI/Modal';
 
 interface UserFormProps {
   isOpen: boolean;
