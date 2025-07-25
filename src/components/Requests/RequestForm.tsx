@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MaterialRequest, RequestItem, Material } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { Button } from '../UI/Button';
-import { Modal } from '../UI/Modal';
+import  Modal  from '../UI/Modal';
 import { Card } from '../UI/Card';
 import { BarcodeScanner } from '../UI/BarcodeScanner';
 import { Plus, Minus, Search, Scan, X } from 'lucide-react';
