@@ -1,6 +1,6 @@
 import React from 'react';
 import { MaterialRequest } from '../../types';
-import { Modal } from '../UI/Modal';
+import  Modal  from '../UI/Modal';
 import { Card } from '../UI/Card';
 import { Button } from '../UI/Button';
 import { 
