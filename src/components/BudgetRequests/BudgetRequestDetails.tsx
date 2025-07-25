@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BudgetRequest, Approval } from '../../lib/supabase';
 import { BudgetService } from '../../services/budgetService';
-import { Modal } from '../UI/Modal';
+import Modal from '../UI/Modal';
 import { Card } from '../UI/Card';
 import { Button } from '../UI/Button';
 import { 
