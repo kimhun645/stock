@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useBudgetRequests } from '../../hooks/useBudgetRequests';
-import { BudgetRequestForm } from './BudgetRequestForm';
+import BudgetRequestForm from './BudgetRequestForm';
 import { BudgetRequestCard } from './BudgetRequestCard';
 import { BudgetRequestDetails } from './BudgetRequestDetails';
 import { Button } from '../UI/Button';
